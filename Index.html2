@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BetSmart AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { margin:0; font-family: 'Roboto', sans-serif; background-color: #0b0c10; color: #c5c6c7; }
+  header { background-color: #1f2833; padding: 20px; text-align: center; }
+  header h1 { color: #66fcf1; margin:0; }
+  nav { text-align: center; margin: 10px 0; }
+  nav a { color: #c5c6c7; text-decoration: none; margin: 0 15px; font-weight: bold; }
+  nav a:hover { color: #45a29e; }
+  section { padding: 40px 20px; max-width: 1000px; margin: auto; }
+  .prediction-card { background: #1f2833; border: 1px solid #45a29e; padding: 20px; margin: 10px 0; border-radius: 8px; transition:0.3s; }
+  .prediction-card:hover { transform: scale(1.03); border-color: #66fcf1; }
+  button { background-color:#45a29e; color:#0b0c10; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin:10px 5px 10px 0; }
+  button:hover { background-color:#66fcf1; }
+  footer { background-color: #1f2833; text-align:center; padding:20px; color:#66fcf1; margin-top:40px; }
+  .affiliate, .vip, .donate { border:1px solid #66fcf1; padding:15px; border-radius:8px; margin:15px 0; }
+  .vip p, .affiliate p, .donate p { margin:5px 0; }
+
+  /* Mobile Optimization */
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    header h1 { font-size: 24px; }
+    nav a { display: block; margin: 8px 0; }
+    section { padding: 20px 10px; }
+    button { width: 100%; margin: 10px 0; }
+    .prediction-card { font-size: 14px; padding: 15px; }
+    canvas { width: 100% !important; height: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BetSmart AI</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#predictions">Predictions</a>
+    <a href="#stats">Stats</a>
+    <a href="#about">About AI</a>
+    <a href="#subscribe">VIP</a>
+    <a href="#donate">Support</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home">
+  <h2>Welcome to BetSmart AI</h2>
+  <p>Get AI-powered insights and predictions for your favorite sports and leagues. Analyze trends, odds, and make smarter decisions!</p>
+</section>
+
+<section id="predictions">
+  <h2>Today's Free Predictions</h2>
+  <button onclick="generatePredictions()">Generate New Predictions</button>
+  <div id="prediction-container"></div>
+
+  <div class="affiliate">
+    <h3>Legal Betting Platforms</h3>
+    <p>Click below to visit legal sites. We earn a commission if you register. For adults 18+ only.</p>
+    <a href="https://www.bet365.com" target="_blank"><button>Bet with Bet365</button></a>
+    <a href="https://www.betway.com" target="_blank"><button>Bet with Betway</button></a>
+  </div>
+
+  <div class="vip">
+    <h3>VIP Predictions Dashboard</h3>
+    <p>Get 5 extra AI predictions daily, detailed stats, and historical performance charts.</p>
+    <canvas id="vipChart" width="400" height="200"></canvas>
+    <a href="#subscribe"><button>Subscribe Now ($5/month)</button></a>
+  </div>
+</section>
+
+<section id="subscribe">
+  <h2>Subscribe to VIP Predictions</h2>
+  <p>Payments via PayPal or Stripe. Gain instant access to premium AI insights and exclusive trends.</p>
+  <button onclick="alert('Payment integration coming soon!')">Subscribe Now</button>
+</section>
+
+<section id="stats">
+  <h2>Stats & Analytics</h2>
+  <p>Visualize team performance and player stats. Use charts, graphs, and historical data to analyze trends effectively.</p>
+</section>
+
+<section id="about">
+  <h2>About Our AI</h2>
+  <p>Our AI analyzes historical data, player stats, and trends to generate probabilistic predictions. This tool is for entertainment and educational purposes only.</p>
+</section>
+
+<section id="donate">
+  <h2>Support BetSmart AI</h2>
+  <p>If you like our predictions, consider supporting us:</p>
+  <button onclick="alert('Donation link coming soon!')">Donate via Patreon</button>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Email: contact@betsmartai.com</p>
+  <p>Subscribe to our newsletter for updates and new AI features.</p>
+</section>
+
+<footer>
+  <p>&copy; 2025 BetSmart AI. Use responsibly. For entertainment purposes only.</p>
+</footer>
+
+<script>
+const matches = [
+  "Team A vs Team B",
+  "Team C vs Team D",
+  "Team E vs Team F",
+  "Team G vs Team H",
+  "Team I vs Team J"
+];
+
+const outcomes = ["Team A wins", "Team B wins", "Draw", "Team C wins", "Team D wins", "Team E wins", "Team F wins"];
+
+function generatePredictions() {
+  const container = document.getElementById("prediction-container");
+  container.innerHTML = "";
+  for (let i = 0; i < 3; i++) {
+    const match = matches[Math.floor(Math.random() * matches.length)];
+    const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+    const confidence = Math.floor(Math.random() * 50) + 50;
+    const card = document.createElement("div");
+    card.className = "prediction-card";
+    card.innerHTML = `<h3>${match}</h3><p>Prediction: ${outcome}</p><p>Confidence: ${confidence}%</p>`;
+    container.appendChild(card);
+  }
+}
+
+// VIP Chart
+const ctx = document.getElementById('vipChart').getContext('2d');
+const vipChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        datasets: [{
+            label: 'Win Probability (%)',
+            data: Array.from({length:5}, () => Math.floor(Math.random() * 50) + 50),
+            backgroundColor: '#45a29e'
+        }]
+    },
+    options: {
+        scales: { y: { beginAtZero: true, max:100 } }
+    }
+});
+
+// Initial predictions
+generatePredictions();
+</script>
+
+</body>
+</html>
